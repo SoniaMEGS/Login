@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
 import loginLogo from "../assets/loginLogo.svg";
 import appFirebase from "../credentials";
 import {
@@ -10,6 +11,7 @@ const auth = getAuth(appFirebase);
 
 const LoginForm = () => {
   const [registered, setRegistered] = useState(false);
+  const navigate = useNavigate();
 
   const handleAutentication = async (e) => {
     e.preventDefault();
@@ -17,10 +19,9 @@ const LoginForm = () => {
     const password = e.target.password.value;
     console.log(email, password);
 
-    if (registered) {
-      await createUserWithEmailAndPassword(auth, email, password);
-    } else {
+    if (!registered) {
       await signInWithEmailAndPassword(auth, email, password);
+      navigate("/home");
     }
   };
 
@@ -45,13 +46,14 @@ const LoginForm = () => {
               placeholder="Enter password"
             />
           </div>
-          <button>{registered ? "Sing up" : "Login"}</button>
+          <button>Login</button>
         </form>
+
         <h4>
-          {registered ? "You have an account" : "You don't have an account "}
-          <button onClick={() => setRegistered(!registered)}>
-            {registered ? "Login" : "Sing up"}
-          </button>
+          You don't have an account
+          <NavLink to={`/register`}>
+            <button>Sing up</button>
+          </NavLink>
         </h4>
       </article>
       <article></article>

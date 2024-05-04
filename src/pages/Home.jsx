@@ -1,15 +1,32 @@
-import React from "react";
+import { useState, useEffect } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
 import appFirebase from "../credentials";
-import { getAuth, signOut } from "firebase/auth";
+import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 const auth = getAuth(appFirebase);
 
-const Home = (props) => {
-  const { user } = props;
-  console.log(user);
+const Home = () => {
+  const [user, setUser] = useState(null);
+  const navigate = useNavigate();
+
+  onAuthStateChanged(auth, (firebaseUser) => {
+    if (firebaseUser) {
+      setUser(firebaseUser);
+    } else {
+      setUser(null);
+    }
+  });
+  console.log(user?.email);
+
+  const handleLogOut = async (e) => {
+    e.preventDefault();
+    signOut(auth);
+    navigate("/");
+  };
+
   return (
     <>
       <div className="bg-slate-600">Welcome</div>
-      <button onClick={() => signOut(auth)}>Logout</button>
+      <button onClick={handleLogOut}>Logout</button>
     </>
   );
 };
