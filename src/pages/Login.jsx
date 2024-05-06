@@ -8,7 +8,7 @@ import loginLogo from "../assets/loginLogo.svg";
 
 const Login = () => {
   return (
-    <section>
+    <section className="h-svh bg-gradient-to-tl from-green-200 to-indigo-200">
       <LoginForm />
     </section>
   );

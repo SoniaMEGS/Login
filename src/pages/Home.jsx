@@ -24,10 +24,15 @@ const Home = () => {
   };
 
   return (
-    <>
-      <div className="bg-slate-600">Welcome</div>
-      <button onClick={handleLogOut}>Logout</button>
-    </>
+    <section className="flex flex-col items-center gap-6">
+      <div className="bg-indigo-200 h-10 w-full">Welcome!</div>
+      <button
+        onClick={handleLogOut}
+        className=" text-md font-semibold leading-none text-white bg-indigo-400 border rounded-lg hover:bg-indigo-700 py-4 w-4/5 lg:w-80 "
+      >
+        Logout
+      </button>
+    </section>
   );
 };
 
